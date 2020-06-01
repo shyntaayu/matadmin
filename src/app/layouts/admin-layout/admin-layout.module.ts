@@ -18,6 +18,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { DisabilitasComponent } from 'app/master/disabilitas/disabilitas.component';
+import { MaterialModule } from 'app/material/material.module';
+import { AddDisabilitasComponent } from 'app/master/disabilitas/add-disabilitas/add-disabilitas.component';
 
 @NgModule({
   imports: [
@@ -31,6 +33,7 @@ import { DisabilitasComponent } from 'app/master/disabilitas/disabilitas.compone
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MaterialModule
   ],
   declarations: [
     DashboardComponent,
@@ -41,7 +44,8 @@ import { DisabilitasComponent } from 'app/master/disabilitas/disabilitas.compone
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    DisabilitasComponent
+    DisabilitasComponent,
+    AddDisabilitasComponent
   ]
 })
 

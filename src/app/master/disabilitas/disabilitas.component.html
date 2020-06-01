@@ -1,183 +1,65 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Simple Table</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Country
-                                    </th>
-                                    <th>
-                                        City
-                                    </th>
-                                    <th>
-                                        Salary
-                                    </th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Niger
-                                        </td>
-                                        <td>
-                                            Oud-Turnhout
-                                        </td>
-                                        <td class="text-primary">
-                                            $36,738
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Curaçao
-                                        </td>
-                                        <td>
-                                            Sinaai-Waas
-                                        </td>
-                                        <td class="text-primary">
-                                            $23,789
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Netherlands
-                                        </td>
-                                        <td>
-                                            Baileux
-                                        </td>
-                                        <td class="text-primary">
-                                            $56,142
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Korea, South
-                                        </td>
-                                        <td>
-                                            Overland Park
-                                        </td>
-                                        <td class="text-primary">
-                                            $38,735
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            5
-                                        </td>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi
-                                        </td>
-                                        <td>
-                                            Feldkirchen in Kärnten
-                                        </td>
-                                        <td class="text-primary">
-                                            $63,542
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            6
-                                        </td>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Chile
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td class="text-primary">
-                                            $78,615
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger row">
+            <div class="col-sm-9">
+              <h4 class="card-title ">Master Disabilitas</h4>
+              <p class="card-category">List of Master Disabilitas</p>
             </div>
+            <div class="col-sm-3">
+              <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="nav-item">
+                  <a mat-button class="nav-link" data-toggle="tab" (click)="openDialog()">
+                    <i class="material-icons">add</i> New
+                    <div class="ripple-container"></div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table mat-table [dataSource]="dataSource" class="col-md-12">
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef class=" text-primary"> Disabilitas ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="kategori">
+                  <th mat-header-cell *matHeaderCellDef class=" text-primary"> Kategori </th>
+                  <td mat-cell *matCellDef="let element"> {{element.kategori}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="created_at">
+                  <th mat-header-cell *matHeaderCellDef class=" text-primary"> Created At </th>
+                  <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element; let i = index;">
+                    <button mat-mini-fab color="primary" class="push-right" style="margin-right: 5%;" (click)="openDialog(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"
+                      (click)="deleteDisabilitas(i, element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="title-group">
-        <h1 class="mat-h1">Disabilitas List</h1>
-        <mat-divider fxFlex="1 0"></mat-divider>
-      </div>
-      
-      <p *ngIf="DisabilitasData.length <= 0" class="no-data">There is no disabilitas added yet!</p>
-      
-      <div class="container" *ngIf="DisabilitasData.length > 0">
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef> Disabilitas ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="kategori">
-              <th mat-header-cell *matHeaderCellDef> Kategori </th>
-              <td mat-cell *matCellDef="let element"> {{element.kategori}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="created_at">
-              <th mat-header-cell *matHeaderCellDef> Created At </th>
-              <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef> Action </th>
-              <td mat-cell *matCellDef="let element; let i = index;">
-                <button mat-raised-button color="primary" class="push-right"
-                  [routerLink]="['/edit-disabilitas/', element]">Edit</button>
-                <button mat-raised-button color="accent" (click)="deleteDisabilitas(i, element)">Delete</button>
-              </td>
-            </ng-container>
-      
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-      
-          <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
-      </div>
   </div>
-  
+
+  <p *ngIf="DisabilitasData.length <= 0" class="no-data">There is no disabilitas added yet!</p>
+</div>

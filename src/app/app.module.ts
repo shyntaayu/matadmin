@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -26,6 +26,7 @@ import { LoginComponent } from './account/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   imports: [
@@ -37,20 +38,23 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     RouterModule,
     AppRoutingModule,
     HttpClientModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    })
+    MaterialModule,
+    ReactiveFormsModule
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+    // })
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    LoginComponent,
+    LoginComponent
 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
