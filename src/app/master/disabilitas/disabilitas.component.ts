@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { Disabilitas } from 'app/model/disabilitas';
+import { MatPaginator } from '@angular/material/paginator';
+import { ApiService } from 'app/services/api.service';
 
 @Component({
   selector: 'app-disabilitas',
@@ -7,9 +11,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DisabilitasComponent implements OnInit {
 
-  constructor() { }
+  DisabilitasData: any = [];
+  dataSource: MatTableDataSource<Disabilitas>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns: string[] = ['id', 'kategori', 'created_at', 'action'];
 
-  ngOnInit(): void {
+  constructor(private disabilitasApi: ApiService) {
+    this.disabilitasApi.GetAllDisabilitas().subscribe(data => {
+      this.DisabilitasData = data.data;
+      console.log(data)
+      this.dataSource = new MatTableDataSource<Disabilitas>(this.DisabilitasData);
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+      }, 0);
+    })    
+  }
+
+  ngOnInit() { }
+
+  deleteDisabilitas(index: number, e){
+    if(window.confirm('Are you sure')) {
+      const data = this.dataSource.data;
+      data.splice((this.paginator.pageIndex * this.paginator.pageSize) + index, 1);
+      this.dataSource.data = data;
+      this.disabilitasApi.DeleteDisabilitas(e.id).subscribe()
+    }
   }
 
 }

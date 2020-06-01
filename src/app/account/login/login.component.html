@@ -1,0 +1,82 @@
+<app-my-app ng-version="9.0.1">
+    <router-outlet></router-outlet>
+    <app-layout>
+        <nav color-on-scroll="500" class="navbar navbar-expand-lg bg-primary navbar-transparent navbar-absolute">
+            <div class="container">
+                <div class="navbar-wrapper"><a class="navbar-brand d-none d-sm-none d-md-block"
+                        href="#/dashboard">Wastime</a><a class="navbar-brand d-block d-sm-block d-md-none"
+                        href="#/dashboard">Wastime</a></div>
+                <button mat-button="" type="button" class="navbar-toggler mat-button mat-button-base"><span
+                        class="mat-button-wrapper"><span class="sr-only">Toggle navigation</span><span
+                            class="navbar-toggler-icon icon-bar"></span><span
+                            class="navbar-toggler-icon icon-bar"></span><span
+                            class="navbar-toggler-icon icon-bar"></span></span>
+                    <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                    <div class="mat-button-focus-overlay"></div>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li routerlinkactive="active" class="nav-item active"><a class="nav-link"
+                                href="#/pages/login"><i class="material-icons">fingerprint</i> Login </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <router-outlet></router-outlet>
+        <app-login-cmp>
+            <div class="wrapper wrapper-full-page">
+                <div filter-color="black" class="page-header login-page header-filter"
+                    style="background-image: url('./assets/img/login.jpg'); background-size: cover; background-position: top center;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-6 mt-auto ml-auto mr-auto"
+                                style="margin-top:10% !important">
+                                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+                                    class="form ng-untouched ng-pristine ng-valid">
+                                    <div class="card card-login">
+                                        <div class="card-header card-header-rose text-center">
+                                            <h4 class="card-title">Log in</h4>
+                                        </div>
+                                        <div class="card-body"><span class="bmd-form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text"><i
+                                                                class="material-icons">face</i></span></div><input
+                                                        type="text" formControlName="username"
+                                                        placeholder="First Name..." class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                                                    <div *ngIf="submitted && f.username.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f.username.errors.required">Username is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span><span class="bmd-form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text"><i
+                                                                class="material-icons">lock_outline</i></span></div>
+                                                    <input type="password" formControlName="password"
+                                                        placeholder="Password..."
+                                                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                                                        class="form-control">
+                                                    <div *ngIf="submitted && f.password.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="f.password.errors.required">Password is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <div class="card-footer justify-content-center"><a (click)="onSubmit()"
+                                                class="btn btn-rose btn-link btn-lg">Lets Go</a></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </app-login-cmp>
+        <!---->
+    </app-layout>
+    <!---->
+</app-my-app>
