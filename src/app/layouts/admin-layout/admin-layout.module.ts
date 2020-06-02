@@ -20,6 +20,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { DisabilitasComponent } from 'app/master/disabilitas/disabilitas.component';
 import { MaterialModule } from 'app/material/material.module';
 import { AddDisabilitasComponent } from 'app/master/disabilitas/add-disabilitas/add-disabilitas.component';
+import { DeleteDisabilitasComponent } from 'app/master/disabilitas/delete-disabilitas/delete-disabilitas.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { AddDisabilitasComponent } from 'app/master/disabilitas/add-disabilitas/
     NotificationsComponent,
     UpgradeComponent,
     DisabilitasComponent,
-    AddDisabilitasComponent
+    AddDisabilitasComponent,
+    DeleteDisabilitasComponent
   ]
 })
 

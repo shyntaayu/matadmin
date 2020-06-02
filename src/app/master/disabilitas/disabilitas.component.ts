@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Disabilitas } from 'app/model/disabilitas';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApiService } from 'app/services/api.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AddDisabilitasComponent } from './add-disabilitas/add-disabilitas.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AddDisabilitasComponent, SnackBarComponent } from './add-disabilitas/add-disabilitas.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteDisabilitasComponent } from './delete-disabilitas/delete-disabilitas.component';
 
 @Component({
   selector: 'app-disabilitas',
@@ -16,7 +18,7 @@ export class DisabilitasComponent implements OnInit {
   DisabilitasData: any = [];
   dataSource: MatTableDataSource<Disabilitas>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['id', 'kategori', 'created_at', 'action'];
+  displayedColumns: string[] = ['id', 'kategori', 'action'];
 
   constructor(private disabilitasApi: ApiService, private dialog: MatDialog) {
     this.getData();
@@ -35,13 +37,16 @@ export class DisabilitasComponent implements OnInit {
 
   ngOnInit() { }
 
-  deleteDisabilitas(index: number, e) {
-    if (window.confirm('Are you sure')) {
-      const data = this.dataSource.data;
-      data.splice((this.paginator.pageIndex * this.paginator.pageSize) + index, 1);
-      this.dataSource.data = data;
-      this.disabilitasApi.DeleteDisabilitas(e.id).subscribe()
-    }
+  deleteDisabilitas(index: number, e): void {
+    const dialogRef = this.dialog.open(DeleteDisabilitasComponent, {
+      width: '300px',
+      data: { index: index, e: e }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getData();
+    });
   }
 
   openDialog(param) {
@@ -49,13 +54,13 @@ export class DisabilitasComponent implements OnInit {
     if (param) {
       dialogRef = this.dialog.open(AddDisabilitasComponent, {
         data: {
-          kategori: param
+          param
         },
         width: '400px',
         disableClose: true
       });
     } else {
-      dialogRef = this.dialog.open(AddDisabilitasComponent,{
+      dialogRef = this.dialog.open(AddDisabilitasComponent, {
         width: '400px',
         disableClose: true
       });

@@ -4,7 +4,8 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from 'app/services/api.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Disabilitas } from 'app/model/disabilitas';
+import { CDisabilitas } from 'app/model/disabilitas';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-disabilitas',
@@ -19,16 +20,17 @@ export class AddDisabilitasComponent implements OnInit {
   addOnBlur = true; kategori; type; isAdd = false;
   @ViewChild('chipList') chipList;
   @ViewChild('resetDisabilitasForm') myNgForm;
-  disabilitasForm: FormGroup;
+  disabilitasForm: FormGroup; model = new CDisabilitas;
 
   ngOnInit() {
-    if(this.data){
+    if (this.data) {
       this.isAdd = false;
-        this.disabilitasForm = this.fb.group({
-          kategori: [this.data.kategori, [Validators.required]],
-        });
-        this.kategori = this.data.kategori;
-    }else{
+      this.disabilitasForm = this.fb.group({
+        kategori: [this.data.kategori, [Validators.required]],
+      });
+      this.kategori = this.data.param.kategori;
+      console.log(this.data.param);
+    } else {
       this.isAdd = true;
     }
     this.submitBookForm();
@@ -40,7 +42,8 @@ export class AddDisabilitasComponent implements OnInit {
     private ngZone: NgZone,
     private actRoute: ActivatedRoute,
     private disabilitasApi: ApiService,
-    @Inject(MAT_DIALOG_DATA) private data: Disabilitas
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private _snackBar: MatSnackBar
   ) {
   }
 
@@ -61,22 +64,38 @@ export class AddDisabilitasComponent implements OnInit {
     if (this.isAdd) {
       if (this.disabilitasForm.valid) {
         this.disabilitasApi.AddDisabilitas(this.disabilitasForm.value).subscribe(res => {
+          this._snackBar.openFromComponent(SnackBarComponent, {
+            duration: 5 * 1000,
+          });
           this.ngZone.run(() => this.router.navigateByUrl('/master/disabilitas'))
         });
       }
     } else {
-      var id = this.actRoute.snapshot.paramMap.get('id');
-      if (window.confirm('Are you sure you want to update?')) {
-        this.disabilitasApi.UpdateDisabilitas(id, this.disabilitasForm.value).subscribe( res => {
-          this.ngZone.run(() => this.router.navigateByUrl('/master/disabilitas'))
+      console.log(this.data.param, this.data.param.created_at, this.data.param.kategori, this.data.param.id);
+      this.model.created_at = this.data.param.created_at;
+      this.model.kategori = this.kategori;
+      this.model.id = this.data.param.id;
+      this.disabilitasApi.UpdateDisabilitas(this.model.id, this.model).subscribe(res => {
+        this._snackBar.openFromComponent(SnackBarComponent, {
+          duration: 5 * 1000,
         });
-      }
+        this.ngZone.run(() => this.router.navigateByUrl('/master/disabilitas'))
+      });
     }
   }
 
   back() {
     this.router.navigate(['/master/disabilitas']);
   }
-  
-
 }
+
+@Component({
+  selector: 'snack-bar-component',
+  templateUrl: 'snack-bar.component.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class SnackBarComponent { }
