@@ -17,7 +17,7 @@ export class DeleteDisabilitasComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DeleteDisabilitasComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Disabilitas,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private disabilitasApi: ApiService,
     private _snackBar: MatSnackBar) {
   }
