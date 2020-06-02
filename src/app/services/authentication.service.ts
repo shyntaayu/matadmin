@@ -18,7 +18,7 @@ export class AuthenticationService {
       private router: Router,
       private http: HttpClient
   ) {
-      this.userSubject = new BehaviorSubject<UserResponse>(JSON.parse(localStorage.getItem('user')));
+      this.userSubject = new BehaviorSubject<UserResponse>(JSON.parse(localStorage.getItem('userMe')));
       this.user = this.userSubject.asObservable();
   }
 
