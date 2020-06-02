@@ -31,7 +31,7 @@ export class AuthenticationService {
       return this.http.post<any>(`${environment.apiUrl}/login`, { username, password })
           .pipe(map(user => {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('user', JSON.stringify(user));
+              localStorage.setItem('userMe', JSON.stringify(user));
               console.log(user)
               this.userSubject.next(user);
               return user;
@@ -40,7 +40,7 @@ export class AuthenticationService {
 
   logout() {
       // remove user from local storage to log user out
-      localStorage.removeItem('user');
+      localStorage.removeItem('userMe');
       this.userSubject.next(null);
       this.router.navigate(['/login']);
   }

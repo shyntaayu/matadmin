@@ -10,7 +10,6 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { DisabilitasComponent } from 'app/master/disabilitas/disabilitas.component';
 import { AuthGuard } from 'app/helpers/auth.guard';
-import { AddDisabilitasComponent } from 'app/master/disabilitas/add-disabilitas/add-disabilitas.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -55,19 +54,13 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'user-profile', component: UserProfileComponent },
-    { path: 'table-list', component: TableListComponent },
-    { path: 'typography', component: TypographyComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'table-list', component: TableListComponent, canActivate: [AuthGuard] },
+    { path: 'typography', component: TypographyComponent, canActivate: [AuthGuard] },
     { path: 'icons', component: IconsComponent },
-    { path: 'maps', component: MapsComponent },
-    { path: 'notifications', component: NotificationsComponent },
-    { path: 'upgrade', component: UpgradeComponent },
+    { path: 'maps', component: MapsComponent, canActivate: [AuthGuard] },
+    { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
+    { path: 'upgrade', component: UpgradeComponent, canActivate: [AuthGuard] },
     { path: 'master/disabilitas', component: DisabilitasComponent, canActivate: [AuthGuard] },
-    {
-        path: 'master/disabilitas/:type', component: AddDisabilitasComponent, canActivate: [AuthGuard],
-    },
-    // {
-    //     path: 'master/disabilitas/:type/:id', component: AddDisabilitasComponent, canActivate: [AuthGuard],
-    // }
 ];
