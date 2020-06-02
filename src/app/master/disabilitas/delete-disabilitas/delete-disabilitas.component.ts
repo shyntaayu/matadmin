@@ -20,13 +20,10 @@ export class DeleteDisabilitasComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Disabilitas,
     private disabilitasApi: ApiService,
     private _snackBar: MatSnackBar) {
-    console.log(data);
   }
 
   delete(e) {
-    console.log(e)
     this.disabilitasApi.DeleteDisabilitas(e.id).subscribe(result => {
-      console.log(result)
       this._snackBar.openFromComponent(SnackBarComponent, {
         duration: 5 * 1000,
       });

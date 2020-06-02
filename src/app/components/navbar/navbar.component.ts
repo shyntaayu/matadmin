@@ -25,9 +25,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         let a = JSON.parse(localStorage.getItem('userMe'));
-        this.userFromApi = a ? a.user : null;;
-        console.log(this.userFromApi);
-        console.log(a)
+        this.userFromApi = a ? a.user : null;
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

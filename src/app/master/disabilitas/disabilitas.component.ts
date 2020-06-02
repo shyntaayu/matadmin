@@ -27,7 +27,6 @@ export class DisabilitasComponent implements OnInit {
   getData() {
     this.disabilitasApi.GetAllDisabilitas().subscribe(data => {
       this.DisabilitasData = data.data;
-      console.log(data)
       this.dataSource = new MatTableDataSource<Disabilitas>(this.DisabilitasData);
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;

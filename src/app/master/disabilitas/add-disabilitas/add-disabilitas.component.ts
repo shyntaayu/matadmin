@@ -29,7 +29,6 @@ export class AddDisabilitasComponent implements OnInit {
         kategori: [this.data.kategori, [Validators.required]],
       });
       this.kategori = this.data.param.kategori;
-      console.log(this.data.param);
     } else {
       this.isAdd = true;
     }
@@ -71,7 +70,6 @@ export class AddDisabilitasComponent implements OnInit {
         });
       }
     } else {
-      console.log(this.data.param, this.data.param.created_at, this.data.param.kategori, this.data.param.id);
       this.model.created_at = this.data.param.created_at;
       this.model.kategori = this.kategori;
       this.model.id = this.data.param.id;

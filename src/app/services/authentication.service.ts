@@ -23,7 +23,6 @@ export class AuthenticationService {
   }
 
   public get userValue(): UserResponse {
-      console.log(this.userSubject)
       return this.userSubject.value;
   }
 
@@ -32,7 +31,6 @@ export class AuthenticationService {
           .pipe(map(user => {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('userMe', JSON.stringify(user));
-              console.log(user)
               this.userSubject.next(user);
               return user;
           }));
